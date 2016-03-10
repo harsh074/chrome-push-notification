@@ -30,6 +30,17 @@ app.post('/send-push', function (req, res) {
 });
 
 
+app.get('/get-push-data', function(req,res){
+	var notification = {
+		"title":"Push message",
+		"message":"The Message",
+		"icon":"https://c1.staticflickr.com/3/2723/4482561996_dce49b1016_z.jpg",
+		"tag":"Chrome Push Notifications"
+	}
+	res.send(notification);
+	res.status(200).end();
+});
+
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
 	console.log('%s: Node server started on %s:%d ...  ', Date(Date.now() ), port);
