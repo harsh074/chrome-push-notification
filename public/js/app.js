@@ -65,6 +65,10 @@ app.controller('MainCtrl',['$scope','$timeout','$http', function($scope,$timeout
 			serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
 			.then(function(subscription){
 				console.log(subscription,'subscribe');
+				if(subscription.endpoint.startsWith('https://android.googleapis.com/gcm/send')){
+					var endpointParts = subscription.endpoint.split('/');
+					$scope.subscriptionId.registrationId = endpointParts[endpointParts.length - 1];
+				}
 				$timeout(function(){
 					$scope.showPushButton = true;
 					$scope.args.pushStatus = true;
