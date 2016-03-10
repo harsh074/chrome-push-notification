@@ -7,7 +7,7 @@ self.addEventListener('push', function(event) {
 	event.waitUntil(
 		self.registration.showNotification(title, {
 			'body': 'The Message',
-			'icon': 'images/icon.png'
+			'icon': '/images/icon.png'
 		}));
 });
 
@@ -18,7 +18,7 @@ self.addEventListener('notificationclick', function(event) {
 	// See http://crbug.com/463146
 	event.notification.close();
 
-	var url = 'https://youtu.be/gYMkEMCHtJ4';
+	var url = 'http://localhost/';
 	// Check if there's already a tab open with this URL.
 	// If yes: focus on the tab.
 	// If no: open a tab with the URL.

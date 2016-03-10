@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html ng-app="chromePushNotify">
 <head>
-	<title>Push Notification iomedia</title>
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Push Notification iomedia</title>
 	<link rel="manifest" href="manifest.json">
-	<link rel="stylesheet" href="css/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="css/angular-material.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="lib/angular.min.js"></script>
-	<script src="lib/material.min.js"></script>
+	<script src="lib/angular-animate.min.js"></script>
+	<script src="lib/angular-aria.min.js"></script>
+	<script src="lib/angular-material.min.js"></script>
 	<script src="js/app.js"></script>
 </head>
-<body ng-controller="MainCtrl">
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header">
-			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Chrome Push Demo</span>
-				<div class="mdl-layout-spacer"></div>
-				<nav class="mdl-navigation mdl-layout--large-screen-only">
-					<a class="mdl-navigation__link" href="https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web?hl=en">Blog Post</a>
-				</nav>
-			</div>
-		</header>
+<body ng-cloak="" ng-controller="MainCtrl">
+	<div class="">
+		 <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>Chrome Push Demo</span>
+        </h2>
+        <span flex=""></span>
+        <md-button class="md-raised" aria-label="Learn More" href="https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web?hl=en" target="_blank">Blog Post</md-button>
+      </div>
+    </md-toolbar>
 
 		<main>
-			<div class="push-switch-container js-push-switch-container">
-				<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect js-push-toggle-switch" for="switch-2">
-					<input type="checkbox" id="switch-2" class="mdl-switch__input" ng-disabled="pushToggle" ng-change="subscribeChange()" data-ng-model="args.pushStatus">
-					<span class="mdl-switch__label">Enable Push Notifications</span>
-				</label>
-			</div>
+			  <md-switch class="md-primary" md-no-ink="" ng-disabled="pushToggle" aria-label="Switch No Ink" ng-model="args.pushStatus" ng-change="subscribeChange()">
+			    Enable Push Notifications
+			  </md-switch>
 
 			<div class="content-overlap-wrapper">
 				<div class="send-push-options" ng-if="showPushButton">
-				<p class="center">
-					<button class="xhr-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Send a Push</button>
-				</p>
+					<md-button class="md-raised md-primary" data-ng-click="sendPushNotification()">Send a Push</md-button>
 				</div>
 			</div>
 		</main>
