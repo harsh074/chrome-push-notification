@@ -1,0 +1,25 @@
+{
+  "name": "Chrome-push-notification",
+  "version": "1.0.0",
+  "description": "Chrome push notification",
+  "keywords": [
+    "Chromepushnotification",
+    "Node.js",
+    "application"
+  ],
+  "author": {
+    "name": "Harsh agarwal"
+  },
+  "homepage": "https://chromepush.herokuapp.com/",
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+  "private": true,
+  "main": "server.js"
+}
