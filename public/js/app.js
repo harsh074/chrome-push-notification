@@ -8,7 +8,7 @@ app.controller('MainCtrl',['$scope','$timeout', function($scope,$timeout) {
 	$scope.updateUIForPush = function(pushToggleSwitch){
 		if ('serviceWorker' in navigator) {  
 			navigator.serviceWorker.register('sw.js')  
-			.then($scope.initialiseState);  
+			.then($scope.initialiseState(pushToggleSwitch));  
 		} else {  
 			console.warn('Service workers aren\'t supported in this browser.');  
 		}  
@@ -32,7 +32,7 @@ app.controller('MainCtrl',['$scope','$timeout', function($scope,$timeout) {
 
 
 
-	$scope.initialiseState = function() {  
+	$scope.initialiseState = function(pushToggleSwitch) {  
 		if (!('showNotification' in ServiceWorkerRegistration.prototype)) {  
 			console.warn('Notifications aren\'t supported.');  
 			return;  
@@ -47,12 +47,20 @@ app.controller('MainCtrl',['$scope','$timeout', function($scope,$timeout) {
 		}
 		navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {  
 			serviceWorkerRegistration.pushManager.getSubscription()  
-				.then(function(subscription) {
+				.then(function(subscription){
+					console.log(subscription,'subscribe');
 					$timeout(function(){
 						$scope.pushToggle = false;
-					}, 100);  
-					if (!subscription) {  
-						return;  
+					}, 100);
+					if (!subscription) {
+						pushToggleSwitch.off();
+						return;
+					}else{
+						$timeout(function(){
+							$scope.args.pushStatus = true;
+							pushToggleSwitch.on();
+							$scope.showPushButton = true;
+						}, 1000);
 					}
 					// sendSubscriptionToServer(subscription);
 				})  
@@ -75,7 +83,11 @@ app.controller('MainCtrl',['$scope','$timeout', function($scope,$timeout) {
 		navigator.serviceWorker.ready.then(function(serviceWorkerRegistration){
 			serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
 			.then(function(subscription){
-				// return sendSubscriptionToServer(subscription);
+				console.log(subscription,'subscribe');
+				$timeout(function(){
+					$scope.showPushButton = true;
+				}, 100);
+				// sendSubscriptionToServer(subscription);
 			})
 			.catch(function(e){
 				if(Notification.permission === 'denied'){
@@ -87,6 +99,34 @@ app.controller('MainCtrl',['$scope','$timeout', function($scope,$timeout) {
 				}
 			});
 		});
+	}
+
+	$scope.unsubscribe = function(){  
+	  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration){
+	    serviceWorkerRegistration.pushManager.getSubscription().then(function(pushSubscription){
+      	console.log(pushSubscription,'get status');
+        if (!pushSubscription){
+          $scope.showPushButton = false;
+          return;
+        }
+
+        // var subscriptionId = pushSubscription.subscriptionId;
+        // sendSubscriptionToServer(subscriptionId);
+
+        pushSubscription.unsubscribe().then(function(successful){
+        	console.log(successful,'unsubscribe');
+        	$timeout(function(){
+	        	$scope.showPushButton = false;
+        	}, 100);
+        }).catch(function(e){
+					// sendSubscriptionToServer(subscriptionId);
+          console.log('Unsubscription error: ', e);
+        	$scope.showPushButton = false;
+        });
+      }).catch(function(e){
+        console.error('Error thrown while unsubscribing from push messaging.', e);
+      });
+	  });
 	}
 }]);
 
