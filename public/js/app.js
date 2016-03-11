@@ -5,7 +5,7 @@ app.controller('MainCtrl',['$scope','$timeout','$http', function($scope,$timeout
 	$scope.pushToggle = true;
 	$scope.args ={"pushStatus":"false"};	
 	$scope.subscriptionId = {'registrationId':"",'endpoint':"https://android.googleapis.com/gcm/send"};
-
+	$scope.modal = {"title":"","message":""};
 
 
 	$scope.initialiseState = function() {  
@@ -115,7 +115,7 @@ app.controller('MainCtrl',['$scope','$timeout','$http', function($scope,$timeout
 	  });
 	}
 
-		$scope.updateUIForPush = function(){
+	$scope.updateUIForPush = function(){
 		if ('serviceWorker' in navigator) {  
 			navigator.serviceWorker.register('sw.js')  
 			.then($scope.initialiseState());  
@@ -127,12 +127,27 @@ app.controller('MainCtrl',['$scope','$timeout','$http', function($scope,$timeout
 	$scope.updateUIForPush();
 
 
+
 	$scope.sendPushNotification = function(){
 		console.log($scope.subscriptionId);
 		$http({
 			url: '/send-push',
 			method: "POST",
 			data: $scope.subscriptionId
+		})
+		.success(angular.bind(this,function(data, status, headers, config) {
+			console.log(data, status);
+		}))
+		.error(angular.bind(this,function(data, status, headers, config) {
+			console.log(data, status);
+		}));
+	}
+
+	$scope.registerPushNotification = function(){
+		$http({
+			url: '/register-push',
+			method: "POST",
+			data: $scope.modal
 		})
 		.success(angular.bind(this,function(data, status, headers, config) {
 			console.log(data, status);

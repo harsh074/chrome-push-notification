@@ -26,13 +26,12 @@
     </md-toolbar>
 
 		<main>
-			  <md-switch class="md-primary" md-no-ink="" ng-disabled="pushToggle" aria-label="Switch No Ink" ng-model="args.pushStatus" ng-change="subscribeChange()">
-			    Enable Push Notifications
-			  </md-switch>
+			  <md-switch class="md-primary" md-no-ink="" ng-disabled="pushToggle" aria-label="Switch No Ink" ng-model="args.pushStatus" ng-change="subscribeChange()">Enable Push Notifications</md-switch>
 
 			<div class="content-overlap-wrapper">
 				<div class="send-push-options" ng-if="showPushButton">
 					<md-button class="md-raised md-primary" data-ng-click="sendPushNotification()">Send a Push</md-button>
+					<md-button class="md-raised md-primary" data-ng-click="registerPushNotification()">Register a Push</md-button>
 				</div>
 			</div>
 		</main>
