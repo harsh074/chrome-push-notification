@@ -1,0 +1,17 @@
+{
+  "name": "Chrome-push-notification",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "latest",
+    "angular-animate": "latest",
+    "angular-bootstrap": "latest",
+    "angular-cookie": "latest",
+    "angular-resource": "latest",
+    "angular-sanitize": "latest",
+    "angular-toastr": "latest",
+    "angular-ui-router": "latest",
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "angular-aria": "~1.5.3"
+  }
+}

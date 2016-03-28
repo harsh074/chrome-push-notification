@@ -1,33 +1,52 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var request = require('request');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var favicon = require('serve-favicon');
+// server.js
 
-var mongo = require('mongodb');
-var monk = require('monk');
-// var db = monk('localhost:27017/chrome-notification');
-var db = monk('harsh074:password@ds011389.mlab.com:11389/chrome-notification');
+// modules =================================================
+var express = require('express'),
+	app = express(),
+	bodyParser = require('body-parser'),
+	methodOverride = require('method-override'),
+	request = require('request'),
+	morgan = require('morgan'),
+	cookieParser = require('cookie-parser'),
+	favicon = require('serve-favicon'),
+	mongo = require('mongodb'),
+	monk = require('monk');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+	var path = require ('path');
 
-
-app.use(favicon(__dirname + '/public/favicon.ico'));
-app.set('view engine', 'html');
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(__dirname + '/public'));
-
-app.use(function(req,res,next){         // Make our db accessible to our router
+var config = require('./config/config');
+var db = monk(config.dbUrl);
+app.use(function(req,res,next){
   req.db = db;
   next();
 });
 
+
+app.set('superSecret', config.secretKey);
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(cookieParser());
+app.use(morgan('dev'));
+
+
+app.set('views', path.join(__dirname, 'public'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+// app.set('views', __dirname + '/public');
+// app.use(express.static(path.join(__dirname + '../public')));
+// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/'));
+
+
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
 app.use('/', routes);
 // app.use('/users', users);
 
@@ -47,7 +66,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.json({
       message: err.message,
       error: err
     });
@@ -58,7 +77,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.json({
     message: err.message,
     error: {}
   });
