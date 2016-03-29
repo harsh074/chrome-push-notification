@@ -1,10 +1,11 @@
 <ng-include src="'partials/menubar.html'"></ng-include>
+<ng-include src="'partials/subheader.html'"></ng-include>
 <section id="login_view">
 	<div class="container">
 		<div ng-if="!complete" class="text-center">
 			<div class="col-md-12">
-				<form role="form" class="form-horizontal" ng-submit="login(loginForm)" name="loginForm" ng-if="authenticated == false" novalidate>
-					<div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && (!loginForm.email.$pristine || submitted) && loginForm.email.$error.email}">
+				<form role="form" ng-submit="login(loginForm)" name="loginForm" ng-if="authenticated == false" novalidate>
+					<div class="form-group row" ng-class="{ 'has-error' : (loginForm.email.$invalid && (!loginForm.email.$pristine || submitted)) || loginForm.email.$error.email}">
 
 						<label for="idEmail" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
@@ -18,7 +19,7 @@
 							   class="help-block">Please check your email address.</p>
 						</div>
 					</div>
-					<div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && (!loginForm.password.$pristine || submitted)}">
+					<div class="form-group row" ng-class="{ 'has-error' : loginForm.password.$invalid && (!loginForm.password.$pristine || submitted)}">
 						<label for="idPassword" class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
 							<input name="password" id="idPassword" type="password" ng-model="model.password"
@@ -33,17 +34,19 @@
 						<p class="text-danger">{{error}}</p>
 					</div>
 
-					<div class="form-group">
-						<div class="col-md-6">
-							<label class="checkbox text-uppercase">
-								<input type="checkbox" name="stay-signed-in" ng-model="model.staySign">
-								 Stay signed in
-							</label>
+					<div class="form-group row">
+						<div class="col-md-4">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="stay-signed-in" ng-model="model.staySign">
+									 Stay signed in
+								</label>
+							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<button type="submit" ng-hide="authenticated" class="btn btn-primary">Login</button>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<a ui-sref="register" class="btn btn-primary">Register</a>
 						</div>
 					</div>

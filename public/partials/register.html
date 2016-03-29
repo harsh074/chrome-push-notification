@@ -1,26 +1,27 @@
 <ng-include src="'partials/menubar.html'"></ng-include>
+<ng-include src="'partials/subheader.html'"></ng-include>
 <section id="login_view">
 	<div class="container">
 		<div ng-if="!complete" class="text-center">
 			<div class="col-md-12">
 				<!-- Register -->
-				<form role="form" class="form-horizontal" ng-if="authenticated == false" name="registerForm" ng-submit="register(registerForm)" novalidate autocomplete="off">
+				<form role="form" ng-if="authenticated == false" name="registerForm" ng-submit="register(registerForm)" novalidate autocomplete="off">
 
-					<div class="form-group" ng-class="{ 'has-error' : registerForm.fname.$invalid && !registerForm.fname.$pristine}">
+					<div class="form-group row" ng-class="{ 'has-error' : registerForm.fname.$invalid && !registerForm.fname.$pristine}">
 						<label for="idFirstname" class="col-sm-2 control-label">First Name</label>
 						<div class="col-sm-10">
 							<input name="fname" id="idFirstname" class="form-control" type="text" ng-model="model.first_name" placeholder="First name" required />
 						</div>
 					</div>
 
-					<div class="form-group" ng-class="{ 'has-error' : registerForm.lname.$invalid && !registerForm.lname.$pristine}">
+					<div class="form-group row" ng-class="{ 'has-error' : registerForm.lname.$invalid && !registerForm.lname.$pristine}">
 						<label for="idLastname" class="col-sm-2 control-label">Last Name</label>
 						<div class="col-sm-10">
 							<input name="lname" id="idLastname" class="form-control" type="text" ng-model="model.last_name" placeholder="Last name" required />
 						</div>
 					</div>
 
-					<div class="form-group" ng-class="{ 'has-error' : registerForm.reg_email.$invalid && !registerForm.reg_email.$pristine}">
+					<div class="form-group row" ng-class="{ 'has-error' : registerForm.reg_email.$invalid && !registerForm.reg_email.$pristine}">
 						<label for="idEmail" class="col-sm-2 control-label">Email ID</label>
 						<div class="col-sm-10">
 							<input name="reg_email" id="idEmail" class="form-control" type="email" ng-model="model.email" placeholder="Email" required />  <!-- ng-pattern="/^\w+([\.]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$/" -->
@@ -29,7 +30,7 @@
 						</div>
 					</div>
 
-					<div class="form-group" ng-class="{ 'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine}">
+					<div class="form-group row" ng-class="{ 'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine}">
 						<label for="idPassword" class="col-sm-2 control-label">Password</label>
 						<div class="col-sm-10">
 							<input name="password" id="idPassword" class="form-control" type="password" ng-model="model.password" placeholder="Password" required /> <!-- ng-minlength="6" -->
@@ -37,7 +38,7 @@
 					</div>
 					<div class="col-md-12"><p ng-repeat="error in errors" class="text-danger">{$ error $}</p></div>
 					<div class="form-group">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<button ng-hide="authenticated" type="submit" class="btn btn-primary cf-btn-small" ng-disabled="registerForm.$invalid">Register</button>
 						</div>
 					</div>

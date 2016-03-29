@@ -1,12 +1,6 @@
-/*!
- * Clean Blog v1.0.0 (http://startbootstrap.com)
- * Copyright 2014 Start Bootstrap
- * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
- */
-
 body {
   font-family: 'Lora', 'Times New Roman', serif;
-  font-size: 20px;
+  font-size: 16px;
   color: #404040;
 }
 p {
@@ -69,7 +63,7 @@ hr.small {
     border-bottom: 1px solid transparent;
   }
   .navbar-custom .navbar-brand {
-    color: black;
+    color: white;
     padding: 20px;
   }
   .navbar-custom .navbar-brand:hover,
@@ -77,7 +71,7 @@ hr.small {
     color: rgba(255, 255, 255, 0.8);
   }
   .navbar-custom .nav li a {
-    color: black;
+    color: white;
     padding: 20px;
   }
   .navbar-custom .nav li a:hover,
@@ -330,13 +324,11 @@ form .row:first-child .floating-label-form-group {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 800;
-  letter-spacing: 1px;
-  border-radius: 0;
-  padding: 15px 25px;
+  padding: 7px 14px;
 }
 .btn-lg {
   font-size: 16px;
-  padding: 25px 35px;
+  padding: 13px 26px;
 }
 .btn-default:hover,
 .btn-default:focus {
@@ -573,7 +565,7 @@ img-crop canvas{
 .friendBtn{
   margin-top: 10px;
 }
-
+/*
 #login_view{
   margin-top: 81px;
-}
+}*/
