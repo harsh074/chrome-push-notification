@@ -1,0 +1,63 @@
+<ng-include src="'partials/menubar.html'"></ng-include>
+<ng-include src="'partials/subheader.html'"></ng-include>
+<section id="profile">
+	<div class="col-md-12">
+		<h1 class="page-header">Profile</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-bar-chart-o"></i> Profile
+			</li>
+			<li class="notificationTab">
+				<switch id="enabled" name="enabled" ng-model="args.pushStatus" ng-change="changeNotificationSatus()" on="On" off="Off" class="green"></switch> 
+				<p>Notification</p>
+			</li>
+		</ol>
+		
+	</div>
+
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="highlight">
+					<h4>
+						<span class="pull-left">PERSONAL</span>
+						<span class="pull-right editing" ng-click="editmode()" ng-hide="editing"><i class="fa fa-edit"></i> Edit</span>
+						<span class="pull-right editing" ng-click="reset()" ng-show="editing"><i class="fa fa-undo"></i> Cancel</span>
+					</h4>
+					<br/>
+					<div class="col-md-4">
+						<h5>Name</h5>
+						<p>{{details.first_name+' '+details.last_name }}</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Email ID</h5>
+						<p>{{ details.email }}</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Mobile Number</h5>
+						<p>{{ details.mobile_number }}</p>
+					</div>
+				</div>
+
+				<div class="highlight" ng-show="editing">
+					<h4>Manage Your Details</h4>
+					<form role="form" name="updateProfileForm" ng-submit="updateProfile(updateProfileForm)" novalidate>
+						<div class="form-group">
+							<label for="id_mobile">Mobile Number</label>
+							<input type="text" class="form-control" id="id_mobile" placeholder="Enter Mobile Number" ng-model="profileData.mobile_number">
+						</div>
+						<div class="form-group">
+							<label for="id_age">Age</label>
+							<input type="text" class="form-control" id="id_age" placeholder="Enter Age" ng-model="profileData.age">
+						</div>
+						<div class="form-group">
+							<label for="id_current_city">Current City</label>
+							<input type="text" class="form-control" id="id_current_city" placeholder="Enter Current City" ng-model="profileData.current_city">
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

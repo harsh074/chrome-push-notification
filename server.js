@@ -10,9 +10,8 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	favicon = require('serve-favicon'),
 	mongo = require('mongodb'),
-	monk = require('monk');
-
-	var path = require ('path');
+	monk = require('monk'),
+	path = require ('path');
 
 var config = require('./config/config');
 var db = monk(config.dbUrl);
@@ -20,7 +19,6 @@ app.use(function(req,res,next){
   req.db = db;
   next();
 });
-
 
 app.set('superSecret', config.secretKey);
 app.use(bodyParser.json());
@@ -31,35 +29,25 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-
 app.set('views', path.join(__dirname, 'public'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
-
 app.use(express.static(path.join(__dirname, 'public')));
-// app.set('views', __dirname + '/public');
-// app.use(express.static(path.join(__dirname + '../public')));
-// app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/'));
 
+require('./routes/index')(app);
 
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-app.use('/', routes);
 // app.use('/users', users);
 
 
-
-/// catch 404 and forwarding to error handler
+// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-/// error handlers
+// error handlers
 
 // development error handler
 // will print stacktrace
@@ -123,9 +111,8 @@ app.get('/get-push-data', function(req,res){
 });*/
 
 
-
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 8101;
 app.listen(port, function () {
 	console.log('%s: Node server started on %s:%d ...  ', Date(Date.now() ), port);
 });
-module.exports = app;
+exports = module.exports = app;   

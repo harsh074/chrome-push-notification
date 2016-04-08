@@ -4,7 +4,7 @@
 	<div class="container">
 		<div ng-if="!complete" class="text-center">
 			<div class="col-md-12">
-				<form role="form" ng-submit="login(loginForm)" name="loginForm" ng-if="authenticated == false" novalidate>
+				<form role="form" ng-submit="login(loginForm)" name="loginForm" ng-if="!authenticated" novalidate>
 					<div class="form-group row" ng-class="{ 'has-error' : (loginForm.email.$invalid && (!loginForm.email.$pristine || submitted)) || loginForm.email.$error.email}">
 
 						<label for="idEmail" class="col-sm-2 control-label">Email</label>

@@ -1,14 +1,24 @@
 'use strict';
-app.controller('masterCtrl', function($scope, $rootScope, $state, ipCookie, utilityService) {
-	utilityService.initialize('/api', false, $scope, $rootScope);
+app.controller('masterCtrl',["$scope","$state","ipCookie","utilityService","CONSTANTS",'$timeout', function($scope,$state,ipCookie,utilityService,CONSTANTS,$timeout){
+	utilityService.initialize('/api', false, $scope);
+
 	$scope.loggedIn = false;
-
-	$state.go('home');
+	
 	if(ipCookie('token')){
+		CONSTANTS.AUTHENTICATED = true;
 		$state.go('profile');
-	}
+	}else{
+		CONSTANTS.AUTHENTICATED = false;
+	}	
+	
 
-});
+}]);
+app.controller('navBarCtrl', ['$scope','CONSTANTS','utilityService', function($scope,CONSTANTS,utilityService){
+	$scope.authenticated = CONSTANTS.AUTHENTICATED;
+	$scope.logout = function(){
+		utilityService.logout();
+	}
+}]);
 
 
 /*app.controller('masterCtr',['$scope','$timeout','$http', function($scope,$timeout,$http){

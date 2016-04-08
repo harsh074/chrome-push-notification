@@ -1,7 +1,16 @@
 var app = angular.module('chromePushNotify', ['ipCookie', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap','toastr']);
+app.run(['CONSTANTS','ipCookie', function(CONSTANTS,ipCookie){
+	if(CONSTANTS.PRODUCTION_MODE) {
+		if(window.console && window.console.log){
+			window.console.log = function() {};
+		}
+		if(window.alert){
+			window.alert = function() {};
+		}
+	}
+}]);
 
-
-app.config(['$stateProvider', function($stateProvider) {
+app.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {
 	$stateProvider
 		.state('login', {
 			url: '/login',
@@ -29,5 +38,5 @@ app.config(['$stateProvider', function($stateProvider) {
 			controller:'profileCtrl'
 		});
 
-
+		$urlRouterProvider.otherwise('/login');
 }]);

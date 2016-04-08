@@ -1,11 +1,12 @@
 'use strict';
-app.controller('loginCtrl', function ($scope, $rootScope, $state , utilityService) {
-	if($rootScope.token){
+app.controller('loginCtrl',["$scope","$state","utilityService",'CONSTANTS', function ($scope, $state, utilityService,CONSTANTS) {
+	if(CONSTANTS.AUTHENTICATED){
 		$state.go('profile');
 	}
 	else {
 		$scope.model = {'email': '', 'password': '', 'staySign': false};
 		$scope.complete = false;
+		$scope.authenticated = false;
 		$scope.login = function (formData) {
 			$scope.submitted = true;
 			if (formData.password.$error.minlength) {
@@ -16,10 +17,11 @@ app.controller('loginCtrl', function ($scope, $rootScope, $state , utilityServic
 				$scope.pattern = true;
 			}
 			if (formData.$valid) {
-				utilityService.login($scope.model, $rootScope)
+				utilityService.login($scope.model)
 					.then(function (data) {
 						// success case
 						$scope.complete = true;
+						CONSTANTS.AUTHENTICATED = true;
 						$scope.setAuth(true);
 						$state.go('profile');
 					}, function (data) {
@@ -29,4 +31,4 @@ app.controller('loginCtrl', function ($scope, $rootScope, $state , utilityServic
 			}
 		}
 	}
-});
+}]);

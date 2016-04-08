@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('registerCtrl', function ($scope, $state, $stateParams, utilityService, $rootScope, ipCookie) {
+app.controller('registerCtrl',["$scope","$state","utilityService","ipCookie", function ($scope, $state, utilityService, ipCookie) {
 	if($rootScope.token){
 		console.log("logged in")
 		$state.go('profile');
@@ -13,24 +13,15 @@ app.controller('registerCtrl', function ($scope, $state, $stateParams, utilitySe
 	$scope.register = function(formData){
 		$scope.errors = [];
 		if(formData.$valid){
-			utilityService.register($scope.model, $rootScope)
+			utilityService.register($scope.model)
 			.then(function(data){
 				$scope.setAuth(true);
 				$state.go('profile');
 
 			},function(data){
 				// error case
-				//$scope.errors = [];
-				//for(var key in data){
-				//	if(key != "status"){
-				//		console.log(data[key][0]);
-				//		$scope.errors.push(data[key][0]);
-				//	}
-				//}
 				$scope.errors = data.user.email;
-				//console.log($scope.errors);
 			});
 		}
 	}
-
-});
+}]);
